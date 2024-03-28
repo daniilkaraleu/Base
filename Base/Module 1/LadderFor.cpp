@@ -48,7 +48,7 @@
 //    cout << endl;
 //
 //    firstElement = 1;
-//    int increment = 0;;
+//    int increment = 0;
 //    for (int i = 0; i < amountOfIter; ++i) {
 //        int result = firstElement + increment;
 //        cout << result << " ";

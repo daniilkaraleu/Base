@@ -21,6 +21,7 @@
 //    bool result = false;
 //    int previousIsSame = number % 2;
 //    number /= 2;
+//
 //    while (number > 0){
 //        int current = number % 2;
 //        if (previousIsSame == current) {
@@ -33,5 +34,6 @@
 //            result = true;
 //        }
 //    }
+//
 //    return result;
 //}

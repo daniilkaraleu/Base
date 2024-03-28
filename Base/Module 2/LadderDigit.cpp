@@ -16,22 +16,29 @@
 //
 //int main() {
 //    int n = 11234;
+//
+//    cout << "Input your number";
+//    cin >> n;
+//
 //    columnOfDigits(n);
 //    sumOfDigits(n);
 //    cout << endl;
-//    cout << multOfDigits(n);
+//    cout << "The product of digits is: "<< multOfDigits(n);
 //    cout << endl;
-//    cout << isIncrease(n);
+//    cout << "Digits increase (1 - true, 0 - false): " << isIncrease(n);
 //    cout << endl;
 //    maxAvgMin(n);
 //    cout << endl;
-//    cout << twoInRow(n);
+//    cout << "The number has two same digits in a row (1 - true, 0 - false): " <<twoInRow(n);
+//
 //    return 0;
 //}
 //
 //void columnOfDigits(int n) {
 //    int digit = 0;
 //    int remains = n;
+//
+//    cout << "The column of digits: ";
 //    while (remains > 0) {
 //        digit = remains % 10;
 //        cout << digit << endl;
@@ -43,6 +50,8 @@
 //    int digit = 0;
 //    int remains = n;
 //    double sum = 0;
+//
+//    cout << "The sum of digits: ";
 //    while (remains > 0) {
 //        digit = remains % 10;
 //        sum += digit;
@@ -55,6 +64,7 @@
 //    int digit = 0;
 //    int remains = n;
 //    double mult = 1;
+//
 //    while (remains > 0) {
 //        digit = remains % 10;
 //        mult *= digit;
@@ -69,6 +79,7 @@
 //    int previous = remains % 10;
 //    remains /= 10;
 //    bool result = true;
+//
 //    while (remains > 0) {
 //        digit = remains % 10;
 //        if (previous <= digit) {
@@ -126,6 +137,7 @@
 //    int remains = n;
 //    int previus = -1;
 //    bool result = true;
+//
 //    while (remains > 0) {
 //        digit = remains % 10;
 //        if (previus == digit) {

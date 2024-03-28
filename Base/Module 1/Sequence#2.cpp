@@ -14,7 +14,6 @@
 //    int nDigit = 0;
 //    int lengthToSubtract = 0;
 //
-//
 //    while (counter < n) {
 //        squared = num * num;
 //        if (1 <= squared / pow(10, lengthOfSquared)) {
@@ -23,6 +22,7 @@
 //        counter += lengthOfSquared;
 //        num += 1;
 //    }
+
 //    lengthToSubtract = counter - n;
 //    for (int j = 0; j <= lengthToSubtract; ++j) {
 //        nDigit = squared % 10;

@@ -11,10 +11,12 @@
 //    int x2 = 4;
 //    int y2 = 4;
 //    string result = "Don't beat";
+
 //    if (x1 == x2 and y1 == y2){
 //        cout << "These figures are at the same position!";
 //        return 0;
 //    }
+
 //    for (int i = x1 - 2; i <= x1 + 2; ++i) {
 //        for (int j = y1 - 2; j <= y1 + 2; ++j) {
 //            if (abs(i - x1) == abs(j - y1))
@@ -27,6 +29,7 @@
 //                continue;
 //        }
 //    }
+
 //    cout << result;
 //    return 0;
 //}

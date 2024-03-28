@@ -22,13 +22,17 @@
 //    cin >> x2;
 //    cout << "Input y coord for the 2nd bishop \n";
 //    cin >> y2;
+//
 //    if (x1 == x2 and y1 == y2){
 //        cout << "These figures are at the same position!";
 //        return 0;
 //    }
+//
 //    if (abs(y2 - y1) == abs(x2 -x1)){
 //        result = "Beat!";
 //    }
+//
 //    cout << result;
+//
 //    return 0;
 //}

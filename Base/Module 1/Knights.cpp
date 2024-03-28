@@ -24,15 +24,19 @@
 //
 //    xDifference = abs(x1 - x2);
 //    yDifference = abs(y1 - y2);
+
 //    if (x1 == x2 and y1 == y2){
 //        cout << result;
 //        return 0;
 //    }
+
 //    if ((yDifference == 2 or xDifference == 2) and (xDifference == 1 or yDifference == 1)){
 //        result = "Beat!";
 //    }else{
 //        result = "Don't beat!";
 //    }
+
 //    cout << result;
+
 //    return 0;
 //}

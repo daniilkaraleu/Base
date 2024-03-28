@@ -37,6 +37,7 @@
 //            arrayOfDate[i] = sumOfDigits;
 //        }
 //    }
+//
 //    for (int i: arrayOfDate) {
 //        destinyNumber += i;
 //    }
@@ -49,6 +50,8 @@
 //        } while (destinyNumber > 0);
 //        destinyNumber = sumOfDigits;
 //    }
+//
 //    cout << "Your destiny number is " << destinyNumber;
+//
 //    return 0;
 //}
