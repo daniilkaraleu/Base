@@ -5,18 +5,19 @@
 //// 123456789 --> 987654321
 //// 000000000 --> 0
 //
-//int ReversedNum(int number);
-//double ReversedNum(double number);
+//int reversedNum(int number);
 //int main() {
-//    int num = 10;
+//    int num = 1234;
 //
-//    cout << ReversedNum(num);
+////    cout << "Input your decimal number";
+////    cin >> num;
+//    cout << "Reversed number is: " <<reversedNum(num);
 //    return 0;
 //}
 //
-//int ReversedNum(int num) {
+//int reversedNum(int num) {
 //    int reversedNumber = 0;
-//    const int arrayLength = 10;
+//    const int arrayLength = 5;
 //    int arrayOfDigits[arrayLength] = {};
 //    int i = -1;
 //    int rank = 1;

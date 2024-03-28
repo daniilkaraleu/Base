@@ -6,14 +6,17 @@
 //// 7  -->  8
 //// 100  --> -889489150
 //
-//double FibonacciSequence(int n);
+//double fibonacciSequence(int n);
 //
 //int main(){
 //    int n = 100;
-//    cout << FibonacciSequence(n);
+//
+////    cout << "Input your preferred fibonacci number";
+////    cin >> n;
+//    cout << "The number is: " <<fibonacciSequence(n);
 //    return 0;
 //}
-//double FibonacciSequence(int n){
+//double fibonacciSequence(int n){
 //    double currentNum = 0;
 //    double nextNum = 1;
 //    double tempSum = 0;

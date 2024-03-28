@@ -2,34 +2,34 @@
 //
 //using namespace std;
 //
-//void ColumnOfDigits(int n);
+//void columnOfDigits(int n);
 //
-//void SumOfDigits(int n);
+//void sumOfDigits(int n);
 //
-//double MultOfDigits(int n);
+//double multOfDigits(int n);
 //
-//bool IsIncrease(int n);
+//bool isIncrease(int n);
 //
-//void MaxAvgMin(int n);
+//void maxAvgMin(int n);
 //
-//bool TwoInRow(int n);
+//bool twoInRow(int n);
 //
 //int main() {
 //    int n = 11234;
-//    ColumnOfDigits(n);
-//    SumOfDigits(n);
+//    columnOfDigits(n);
+//    sumOfDigits(n);
 //    cout << endl;
-//    cout << MultOfDigits(n);
+//    cout << multOfDigits(n);
 //    cout << endl;
-//    cout << IsIncrease(n);
+//    cout << isIncrease(n);
 //    cout << endl;
-//    MaxAvgMin(n);
+//    maxAvgMin(n);
 //    cout << endl;
-//    cout << TwoInRow(n);
+//    cout << twoInRow(n);
 //    return 0;
 //}
 //
-//void ColumnOfDigits(int n) {
+//void columnOfDigits(int n) {
 //    int digit = 0;
 //    int remains = n;
 //    while (remains > 0) {
@@ -39,7 +39,7 @@
 //    }
 //}
 //
-//void SumOfDigits(int n) {
+//void sumOfDigits(int n) {
 //    int digit = 0;
 //    int remains = n;
 //    double sum = 0;
@@ -51,7 +51,7 @@
 //    cout << sum;
 //}
 //
-//double MultOfDigits(int n) {
+//double multOfDigits(int n) {
 //    int digit = 0;
 //    int remains = n;
 //    double mult = 1;
@@ -63,7 +63,7 @@
 //    return mult;
 //}
 //
-//bool IsIncrease(int n) {
+//bool isIncrease(int n) {
 //    int digit = 0;
 //    int remains = n;
 //    int previous = remains % 10;
@@ -81,7 +81,7 @@
 //    return result;
 //}
 //
-//void MaxAvgMin(int n) {
+//void maxAvgMin(int n) {
 //    int digit = n % 10;
 //    int remains = n;
 //    int max = digit;
@@ -121,7 +121,7 @@
 //    cout << "Max: " << max << " Medium: " << mediumDigit << " Min: " << min;
 //}
 //
-//bool TwoInRow(int n) {
+//bool twoInRow(int n) {
 //    int digit = 0;
 //    int remains = n;
 //    int previus = -1;

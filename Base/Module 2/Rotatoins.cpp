@@ -5,14 +5,18 @@
 //// 7 --> false (0)
 //// 2 --> true (1)
 //
-//bool IsAlternate(int num);
+//bool isAlternate(int num);
 //
 //int main(){
-//    cout << IsAlternate(1);
+//    int num = 5;
+//
+////    cout << "Input yor number";
+////    cin >> num;
+//    cout << "It's alternate (1 - true, 0 - false): "<<isAlternate(num);
 //    return 0;
 //}
 //
-//bool IsAlternate(int num){
+//bool isAlternate(int num){
 //    int number = num;
 //    bool result = false;
 //    int previousIsSame = number % 2;

@@ -10,17 +10,21 @@
 //
 //int binToDec(int binary);
 //
-//int main(){
+//int main() {
 //    int binary = 111;
 //    int i = 0;
-//    int decimal = binToDec( binary );
+//    int decimal = 0;
 //
-//    cout << decimal;
+////    cout << "Input your binary number: ";
+////    cin >> binary;
+//
+//    decimal = binToDec(binary);
+//    cout << "Consequent number is: " << decimal;
 //
 //    return 0;
 //}
 //
-//int binToDec(int binary){
+//int binToDec(int binary) {
 //    int basis = 2;
 //    int decimal = 0;
 //    int power = 0;
