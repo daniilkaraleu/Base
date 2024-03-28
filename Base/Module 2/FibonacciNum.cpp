@@ -6,17 +6,17 @@
 //// 7  -->  8
 //// 100  --> -889489150
 //
-//int FibonacciSequence(int n);
+//double FibonacciSequence(int n);
 //
 //int main(){
 //    int n = 100;
 //    cout << FibonacciSequence(n);
 //    return 0;
 //}
-//int FibonacciSequence(int n){
-//    int currentNum = 0;
-//    int nextNum = 1;
-//    int tempSum = 0;
+//double FibonacciSequence(int n){
+//    double currentNum = 0;
+//    double nextNum = 1;
+//    double tempSum = 0;
 //    int lastIter = 1;
 //
 //    for (; lastIter < n; --n) {

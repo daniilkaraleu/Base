@@ -21,7 +21,7 @@
 //        int current = number % 2;
 //        if (previousIsSame == current) {
 //            result = false;
-//            break;
+//            return result;
 //        }
 //        else{
 //            previousIsSame = current;
