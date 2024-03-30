@@ -8,33 +8,31 @@
 //
 //using namespace std;
 //
-//int binToDec(int binary);
+//int getDecimal(int binary);
 //
 //int main() {
 //    int binary = 111;
-//    int i = 0;
 //    int decimal = 0;
 //
 ////    cout << "Input your binary number: ";
 ////    cin >> binary;
 //
-//    decimal = binToDec(binary);
+//    decimal = getDecimal(binary);
 //    cout << "Consequent number is: " << decimal;
 //
 //    return 0;
 //}
 //
-//int binToDec(int binary) {
+//int getDecimal(int binary) {
 //    int basis = 2;
 //    int decimal = 0;
 //    int power = 0;
 //    int digit = 0;
-//    int remains = binary;
 //
-//    while (remains > 0) {
-//        digit = remains % 10;
+//    while (binary > 0) {
+//        digit = binary % 10;
 //        decimal += digit * pow(basis, power);
-//        remains /= 10;
+//        binary /= 10;
 //        power += 1;
 //    }
 //

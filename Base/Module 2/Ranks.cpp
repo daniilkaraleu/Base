@@ -5,32 +5,32 @@
 //// 123456789 --> 987654321
 //// 000000000 --> 0
 //
-//int reversedNum(int number);
+//int getReversedNum(int number);
+//
 //int main() {
-//    int num = 1234;
+//    int num = 10000100;
 //
 ////    cout << "Input your decimal number";
 ////    cin >> num;
-//    cout << "Reversed number is: " <<reversedNum(num);
+//    cout << "Reversed number is: " << getReversedNum(num);
 //    return 0;
 //}
 //
-//int reversedNum(int num) {
+//int getReversedNum(int num) {
 //    int reversedNumber = 0;
-//    const int arrayLength = 5;
+//    const int arrayLength = 10;
 //    int arrayOfDigits[arrayLength] = {};
 //    int i = -1;
 //    int rank = 1;
-//    int number = num;
-//    int lastDigit = 0;
+//    const int BREAK_POINT = 0;
 //
-//    while (number > lastDigit) {
+//    while (num > BREAK_POINT) {
 //        i++;
-//        arrayOfDigits[i] = number % 10;
-//        number /= 10;
+//        arrayOfDigits[i] = num % 10;
+//        num /= 10;
 //    }
 //
-//    for (; i >= lastDigit; --i) {
+//    for (; i >= BREAK_POINT; --i) {
 //        reversedNumber += rank * arrayOfDigits[i];
 //        rank *= 10;
 //    }

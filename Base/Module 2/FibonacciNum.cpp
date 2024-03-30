@@ -4,25 +4,25 @@
 //// 1  -->  0
 //// 3  -->  1
 //// 7  -->  8
-//// 100  --> -889489150
+//// 100  --> 2.18923+e20
 //
-//double fibonacciSequence(int n);
+//double getFibonacciN(int n);
 //
 //int main(){
 //    int n = 100;
 //
 ////    cout << "Input your preferred fibonacci number";
 ////    cin >> n;
-//    cout << "The number is: " <<fibonacciSequence(n);
+//    cout << "The number is: " << getFibonacciN(n);
 //    return 0;
 //}
-//double fibonacciSequence(int n){
+//double getFibonacciN(int n){
 //    double currentNum = 0;
 //    double nextNum = 1;
 //    double tempSum = 0;
-//    int lastIter = 1;
+//    int stopIterate = 1;
 //
-//    for (; lastIter < n; --n) {
+//    for (; stopIterate < n; --n) {
 //        tempSum = currentNum + nextNum;
 //        currentNum = nextNum;
 //        nextNum = tempSum;

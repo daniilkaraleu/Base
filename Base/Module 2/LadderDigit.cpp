@@ -2,150 +2,154 @@
 //
 //using namespace std;
 //
-//void columnOfDigits(int n);
+//void printDigits(int n);
 //
-//void sumOfDigits(int n);
+//void printSumOfDigits(int n);
 //
 //double multOfDigits(int n);
 //
 //bool isIncrease(int n);
 //
-//void maxAvgMin(int n);
+//double getAvgOfDigits(int n);
 //
-//bool twoInRow(int n);
+//int getMediumDigit(int n);
+//
+//void printMaxAvgMin(int n);
+//
+//bool hasTwoInRow(int n);
 //
 //int main() {
-//    int n = 11234;
+//    int n = 1234;
 //
-//    cout << "Input your number";
-//    cin >> n;
-//
-//    columnOfDigits(n);
-//    sumOfDigits(n);
+////    cout << "Input your number";
+////    cin >> n;
+//    cout << "The column of digits:\n";
+//    cout << getAvgOfDigits(n);
 //    cout << endl;
-//    cout << "The product of digits is: "<< multOfDigits(n);
+//    printDigits(n);
+//    cout << "The sum of digits: ";
+//    printSumOfDigits(n);
+//    cout << endl;
+//    cout << "The product of digits is: " << multOfDigits(n);
 //    cout << endl;
 //    cout << "Digits increase (1 - true, 0 - false): " << isIncrease(n);
 //    cout << endl;
-//    maxAvgMin(n);
+//    printMaxAvgMin(n);
 //    cout << endl;
-//    cout << "The number has two same digits in a row (1 - true, 0 - false): " <<twoInRow(n);
+//    cout << "The number has two same digits in a row (1 - true, 0 - false): " << hasTwoInRow(n);
 //
 //    return 0;
 //}
 //
-//void columnOfDigits(int n) {
+//void printDigits(int n) {
 //    int digit = 0;
-//    int remains = n;
 //
-//    cout << "The column of digits: ";
-//    while (remains > 0) {
-//        digit = remains % 10;
+//    while (n > 0) {
+//        digit = n % 10;
 //        cout << digit << endl;
-//        remains /= 10;
+//        n /= 10;
 //    }
 //}
 //
-//void sumOfDigits(int n) {
+//void printSumOfDigits(int n) {
 //    int digit = 0;
-//    int remains = n;
 //    double sum = 0;
 //
-//    cout << "The sum of digits: ";
-//    while (remains > 0) {
-//        digit = remains % 10;
+//    while (n > 0) {
+//        digit = n % 10;
 //        sum += digit;
-//        remains /= 10;
+//        n /= 10;
 //    }
 //    cout << sum;
 //}
 //
 //double multOfDigits(int n) {
 //    int digit = 0;
-//    int remains = n;
 //    double mult = 1;
 //
-//    while (remains > 0) {
-//        digit = remains % 10;
+//    while (n > 0) {
+//        digit = n % 10;
 //        mult *= digit;
-//        remains /= 10;
+//        n /= 10;
 //    }
 //    return mult;
 //}
 //
 //bool isIncrease(int n) {
 //    int digit = 0;
-//    int remains = n;
-//    int previous = remains % 10;
-//    remains /= 10;
-//    bool result = true;
-//
-//    while (remains > 0) {
-//        digit = remains % 10;
+//    int previous = n % 10;
+//    n /= 10;
+//    while (n > 0) {
+//        digit = n % 10;
 //        if (previous <= digit) {
-//            result = false;
-//            break;
+//            return false;
 //        }
 //        previous = digit;
-//        remains /= 10;
+//        n /= 10;
 //    }
-//    return result;
+//    return true;
 //}
 //
-//void maxAvgMin(int n) {
+//void printMaxAvgMin(int n) {
 //    int digit = n % 10;
-//    int remains = n;
 //    int max = digit;
 //    int min = digit;
-//    double average = 0;
-//    double sum = 0;
-//    int counter = 0;
-//    double difference = 0;
-//    int mediumDigit = 0;
+//    int mediumDigit = getMediumDigit(n);
 //
-//    while (remains > 0) {
-//        digit = remains % 10;
-//        sum += digit;
-//        counter += 1;
+//    while (n > 0) {
+//        digit = n % 10;
 //        if (max < digit)
 //            max = digit;
 //        if (min > digit)
 //            min = digit;
-//        remains /= 10;
-//    }
-//
-//    remains = n;
-//    average = sum / counter;
-//    digit = n % 10;
-//    difference = abs(average - digit);
-//    mediumDigit = digit;
-//
-//    while (remains > 0) {
-//        digit = remains % 10;
-//        if (difference > abs(average - digit)) {
-//            difference = abs(average - digit);
-//            mediumDigit = digit;
-//        }
-//        remains /= 10;
+//        n /= 10;
 //    }
 //
 //    cout << "Max: " << max << " Medium: " << mediumDigit << " Min: " << min;
 //}
 //
-//bool twoInRow(int n) {
+//bool hasTwoInRow(int n) {
 //    int digit = 0;
-//    int remains = n;
 //    int previus = -1;
-//    bool result = true;
-//
-//    while (remains > 0) {
-//        digit = remains % 10;
+//    while (n > 0) {
+//        digit = n % 10;
 //        if (previus == digit) {
-//            result = true;
-//            break;
+//            return true;
 //        }
 //        previus = digit;
-//        remains /= 10;
+//        n /= 10;
 //    }
-//    return result;
+//    return false;
+//}
+//
+//double getAvgOfDigits(int n) {
+//    double avg = 0;
+//    int digit = 0;
+//    int counter = 0;
+//
+//    while (n > 0) {
+//        counter += 1;
+//        digit = n % 10;
+//        avg += digit;
+//        n /= 10;
+//    }
+//    avg /= counter;
+//    return avg;
+//}
+//
+//int getMediumDigit(int n) {
+//    double average = getAvgOfDigits(n);
+//    int digit = n % 10;
+//    double difference = abs(average - digit);
+//    int mediumDigit = digit;
+//
+//    while (n > 0) {
+//        digit = n % 10;
+//        if (difference > abs(average - digit)) {
+//            difference = abs(average - digit);
+//            mediumDigit = digit;
+//        }
+//        n /= 10;
+//    }
+//    return mediumDigit;
 //}
