@@ -11,7 +11,6 @@
 //    int y2 = 0;
 //    int xDifference = 0;
 //    int yDifference = 0;
-//    string result = "These figures are at the same position!";
 //
 //    cout << "Input x coord for the 1st knight \n";
 //    cin >> x1;
@@ -24,19 +23,17 @@
 //
 //    xDifference = abs(x1 - x2);
 //    yDifference = abs(y1 - y2);
-
+//
 //    if (x1 == x2 and y1 == y2){
-//        cout << result;
-//        return 0;
+//        cout << "These figures are at the same position!";
+//        return 1;
 //    }
-
+//
 //    if ((yDifference == 2 or xDifference == 2) and (xDifference == 1 or yDifference == 1)){
-//        result = "Beat!";
+//        cout << "Beat!";
 //    }else{
-//        result = "Don't beat!";
+//        cout << "Don't beat!";
 //    }
-
-//    cout << result;
-
+//
 //    return 0;
 //}
