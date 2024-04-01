@@ -5,7 +5,7 @@ using namespace std;
 
 const int X_DIMENSION = 18;
 const int Y_DIMENSION = 50;
-const int AMOUNT_OF_BEINGS = 3;
+const int AMOUNT_OF_BEINGS = 5;
 
 int field[X_DIMENSION][Y_DIMENSION] = {};
 
@@ -54,7 +54,7 @@ void printField(char s) {
             if (field[i][j] == 0) {
                 cout << s;
             } else {
-                cout << "#";
+                cout << "\\o/";
             }
         }
         cout << endl;
@@ -92,7 +92,7 @@ void lifeDistribution() {
                     arrayToChange[i][j] = 0;
                 if (checkAround(i, j) < 2 and field[i][j])
                     arrayToChange[i][j] = 0;
-                if (checkAround(i, j) == 3 and field[i][j] == 0)
+                if (checkAround(i, j) == 3)
                     arrayToChange[i][j] = 1;
                 if (checkAround(i, j) == 2 and field[i][j])
                     arrayToChange[i][j] = 1;
