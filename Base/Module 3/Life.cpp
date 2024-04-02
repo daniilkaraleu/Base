@@ -36,11 +36,6 @@ int main() {
         cout << "Would you like to play Life Game?\n(1)Start New game\n(0)exit\n";
         cin >> response;
         if (response == 49) {
-            startTheGame(xCoords, yCoords);
-            if (!checkData(xCoords, yCoords, AMOUNT_OF_BEINGS)) {
-                cout << "Invalid coords!";
-                continue;
-            }
             placeLife(xCoords, yCoords, AMOUNT_OF_BEINGS);
             printField(symbol);
             Sleep(2000);
@@ -74,9 +69,7 @@ void placeLife(int xCoords[], int yCoords[], int amountOfBeings) {
     for (int i = 0; i < X_DIMENSION; ++i) {
         for (int j = 0; j < Y_DIMENSION; ++j) {
             for (int k = 0; k < amountOfBeings; ++k) {
-                if (xCoords[k] == i and yCoords[k] == j) {
-                    field[i][j] = 1;
-                }
+                field[i][j] = rand() % 2;
             }
         }
     }
