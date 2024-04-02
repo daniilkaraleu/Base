@@ -27,7 +27,7 @@ int nextLifePlacement(int nextField[X_DIMENSION][Y_DIMENSION]);
 
 int main() {
     char symbol = ' ';
-    int response = 1;
+    char response = 1;
     int xCoords[AMOUNT_OF_BEINGS] = {};
     int yCoords[AMOUNT_OF_BEINGS] = {};
 
@@ -35,7 +35,7 @@ int main() {
     while (1) {
         cout << "Would you like to play Life Game?\n(1)Start New game\n(0)exit\n";
         cin >> response;
-        if (response) {
+        if (response == 49) {
             startTheGame(xCoords, yCoords);
             if (!checkData(xCoords, yCoords, AMOUNT_OF_BEINGS)) {
                 cout << "Invalid coords!";
@@ -45,10 +45,14 @@ int main() {
             printField(symbol);
             Sleep(2000);
             lifeDistribution();
-        } else
-            break;
+        } else if (response == 48) {
+            return 0;
+        }
+        else{
+            cout << "Error! Incorrect response";
+            return 1;
+        }
     }
-    return 0;
 }
 
 void printField(char s) {
