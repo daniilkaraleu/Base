@@ -22,6 +22,9 @@ bool checkData(int xCoords[], int yCoords[], int amountOfBeings);
 
 void startTheGame(int xCoords[], int yCoords[]);
 
+int nextLifePlacement(int nextField[X_DIMENSION][Y_DIMENSION]);
+
+
 int main() {
     char symbol = ' ';
     int response = 1;
@@ -79,7 +82,7 @@ void placeLife(int xCoords[], int yCoords[], int amountOfBeings) {
 void lifeDistribution() {
     bool life = 1;
     bool anythingChanges = 1;
-    int arrayToChange[X_DIMENSION][Y_DIMENSION] = {};
+    int nextField[X_DIMENSION][Y_DIMENSION] = {};
 
     while (life and anythingChanges) {
         system("cls");
@@ -89,29 +92,18 @@ void lifeDistribution() {
         for (int i = 1; i < X_DIMENSION - 1; ++i) {
             for (int j = 1; j < Y_DIMENSION - 1; ++j) {
                 if (checkAround(i, j) > 3 and field[i][j])
-                    arrayToChange[i][j] = 0;
+                    nextField[i][j] = 0;
                 if (checkAround(i, j) < 2 and field[i][j])
-                    arrayToChange[i][j] = 0;
+                    nextField[i][j] = 0;
                 if (checkAround(i, j) == 3)
-                    arrayToChange[i][j] = 1;
+                    nextField[i][j] = 1;
                 if (checkAround(i, j) == 2 and field[i][j])
-                    arrayToChange[i][j] = 1;
+                    nextField[i][j] = 1;
                 if (checkAround(i, j) > 0)
                     life = 1;
             }
         }
-
-        for (int i = 1; i < X_DIMENSION - 1; ++i) {
-            for (int j = 1; j < Y_DIMENSION - 1; ++j) {
-                if (arrayToChange[i][j] != field[i][j])
-                    anythingChanges = 1;
-                if (arrayToChange[i][j])
-                    field[i][j] = 1;
-                else
-                    field[i][j] = 0;
-            }
-
-        }
+        anythingChanges = nextLifePlacement(nextField);
 
         printField(' ');
         Sleep(500);
@@ -144,14 +136,34 @@ bool checkData(int xCoords[], int yCoords[], int amountOfBeings) {
 }
 
 void startTheGame(int xCoords[], int yCoords[]) {
-    printField('o');
-    cout << "Input your " << AMOUNT_OF_BEINGS << " points coords \n";
+    printField('|');
+
+    cout << "Input your " << AMOUNT_OF_BEINGS << " creatures coords XY \n" << endl;
+
     for (int i = 0; i < AMOUNT_OF_BEINGS; ++i) {
-        cout << "Input x[1.." << X_DIMENSION - 1 << "]:";
+        cout << "Input x[1.." << X_DIMENSION - 1 << "]:" << endl;
         cin >> xCoords[i];
-        cout << "Input y[1.." << Y_DIMENSION - 1 << "]:";
+        cout << "Input y[1.." << Y_DIMENSION - 1 << "]:" << endl;
         cin >> yCoords[i];
     }
 
     system("cls");
+}
+
+int nextLifePlacement(int nextField[X_DIMENSION][Y_DIMENSION]){
+    int anythingChanges = 0;
+
+    for (int i = 1; i < X_DIMENSION - 1; ++i) {
+        for (int j = 1; j < Y_DIMENSION - 1; ++j) {
+            if (nextField[i][j] != field[i][j])
+                anythingChanges = 1;
+            if (nextField[i][j])
+                field[i][j] = 1;
+            else
+                field[i][j] = 0;
+        }
+
+    }
+
+    return anythingChanges;
 }
