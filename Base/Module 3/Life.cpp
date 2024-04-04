@@ -10,19 +10,15 @@ const int AMOUNT_OF_BEINGS = 5;
 int field[X_DIMENSION][Y_DIMENSION] = {};
 
 
-void printField(char s);
+void printField(char s);      //Prints field with \o/
 
-void placeLife(int xCoords[], int yCoords[], int amountOfBeings);
+void placeLife(int xCoords[], int yCoords[], int amountOfBeings);   //puts \o/ on the field for the first time
 
-void lifeDistribution();
+void lifeDistribution();  //main func which defines rules of the game
 
-int checkAround(int x, int y);
+int checkAround(int x, int y); // detects \o/ around chosen position
 
-bool checkData(int xCoords[], int yCoords[], int amountOfBeings);
-
-void startTheGame(int xCoords[], int yCoords[]);
-
-int nextLifePlacement(int nextField[X_DIMENSION][Y_DIMENSION]);
+int nextLifePlacement(int nextField[X_DIMENSION][Y_DIMENSION]);  //put \o/ on the field according to the rules
 
 
 int main() {
@@ -122,30 +118,6 @@ int checkAround(int x, int y) {
     return counter - field[x][y];
 }
 
-bool checkData(int xCoords[], int yCoords[], int amountOfBeings) {
-    for (int i = 0; i < amountOfBeings; ++i) {
-        if (xCoords[i] < 1 or xCoords[i] > X_DIMENSION - 1 or yCoords[i] < 1 or yCoords[i] > Y_DIMENSION - 1) {
-            return false;
-        }
-
-    }
-    return true;
-}
-
-void startTheGame(int xCoords[], int yCoords[]) {
-    printField('|');
-
-    cout << "Input your " << AMOUNT_OF_BEINGS << " creatures coords XY \n" << endl;
-
-    for (int i = 0; i < AMOUNT_OF_BEINGS; ++i) {
-        cout << "Input x[1.." << X_DIMENSION - 1 << "]:" << endl;
-        cin >> xCoords[i];
-        cout << "Input y[1.." << Y_DIMENSION - 1 << "]:" << endl;
-        cin >> yCoords[i];
-    }
-
-    system("cls");
-}
 
 int nextLifePlacement(int nextField[X_DIMENSION][Y_DIMENSION]){
     int anythingChanges = 0;
