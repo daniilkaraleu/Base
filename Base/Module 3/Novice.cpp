@@ -12,9 +12,10 @@ int main() {
     bool isWrong = true;
     char currentSymbol = ' ';
     char nextSymbol = ' ';
-    char row[LENGTH] = {'>', '<', '<', '>', '>', '<', '>'};
+    char row[LENGTH] = {RIGHT, LEFT, LEFT, RIGHT, RIGHT, LEFT, RIGHT};
 
     while (isWrong) {
+        Sleep(1000);
         printRow(row);
         currentSymbol = row[0];
         isWrong = false;
@@ -27,8 +28,6 @@ int main() {
             }
             currentSymbol = nextSymbol;
         }
-
-        Sleep(1000);
     }
 
     cout << "\a";
