@@ -2,6 +2,9 @@
 
 using namespace std;
 
+// MAKE PLACE FLAME TABLE WINDOW SCREEN FUNNY ZERO UNDERGO ELSE SAND ADD NEW BEHIND SIMPLE
+
+
 string text = "";
 
 int checkPlagiarism(string text, string fragment);
