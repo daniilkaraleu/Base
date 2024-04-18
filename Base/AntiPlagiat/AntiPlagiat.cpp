@@ -9,7 +9,7 @@ int const N = 4096;
 
 
 
-int const AMOUNT_OF_WORDS = 3;
+int const AMOUNT_OF_WORDS = 1;
 string shinglesText[100] = {};
 string shinglesFragment[100] = {};
 
@@ -18,7 +18,7 @@ int makeShingles(string text, string shingles[]);
 bool compareShingles(string shingleText, string shingleFragment);
 int getStringLength(string str);
 double countPlagiarism(int amountOfShinglesText, int amountOfShinglesFragment);
-void printPlagiarism(string fragment);
+void printPlagiarism(string fragment, string text);
 
 void cleanStr(string& str); 
 void replaceSeparatorsWithWhitespaces(string& str);
@@ -60,10 +60,10 @@ int checkPlagiarism(string text, string fragment){
     cleanStr(text); 
     cleanStr(fragment); 
  
-//    cout << text << endl;
-//    cout << fragment << endl;
+    cout << text << endl;
+    cout << fragment << endl;
 
-    printPlagiarism(fragment);
+    printPlagiarism(fragment, text);
 
     return 0;
 }
@@ -279,7 +279,7 @@ double countPlagiarism(int amountOfShinglesText, int amountOfShinglesFragment) {
     return plagiarism;
 }
 
-void printPlagiarism(string fragment) {
+void printPlagiarism(string fragment, string text) {
     double plagiarism = 0;
     int amountOfShinglesText = 0;
     int amountOfShinglesFragment = 0;
