@@ -14,12 +14,6 @@ string shinglesText[100] = {};
 string shinglesFragment[100] = {};
 
 int checkPlagiarism(string text, string fragment);
-void removePunctuationMarks(string text, string fragment);
-void removeExcessSpaces(string text, string fragment);
-void removeArticles(string text, string fragment);
-void removePrepositions(string text, string fragment);
-void setUpperRegister(string text, string fragment);
-bool checkIsCopy();
 int makeShingles(string text, string shingles[]);
 bool compareShingles(string shingleText, string shingleFragment);
 int getStringLength(string str);
@@ -27,9 +21,9 @@ double countPlagiarism(int amountOfShinglesText, int amountOfShinglesFragment);
 void printPlagiarism(string fragment);
 
 void cleanStr(string& str); 
-void replaceSeparatorsWithWitespaces(string& text); 
+void replaceSeparatorsWithWhitespaces(string& str);
 bool isSeparator(char sym); 
-void removeExcessSpaces(string& text); 
+void removeExcessSpaces(string& str);
 void removeArticles(string& str); 
 void removePrepositions(string& str); 
 void capitalize(string& str); 
@@ -62,19 +56,21 @@ int main() {
 }
 
 
-
+int checkPlagiarism(string text, string fragment){
     cleanStr(text); 
     cleanStr(fragment); 
  
-    cout << text << endl; 
-    cout << fragment << endl;
+//    cout << text << endl;
+//    cout << fragment << endl;
+
+    printPlagiarism(fragment);
 
     return 0;
 }
 
-void cleanStr(string& str) { 
- 
-    replaceSeparatorsWithWitespaces(str); 
+void cleanStr(string& str) {
+
+    replaceSeparatorsWithWhitespaces(str);
     removeExcessSpaces(str); 
     capitalize(str); 
     removeArticles(str); 
@@ -102,7 +98,7 @@ bool isSeparator(char sym) {
     return false; 
 } 
  
-void replaceSeparatorsWithWitespaces(string& str) { 
+void replaceSeparatorsWithWhitespaces(string& str) {
     for (int i = 0; str[i] != '\0'; i++) { 
         if (isSeparator(str[i])) 
             str[i] = ' '; 
@@ -162,15 +158,16 @@ void deleteSubstring(string& str, string& subStr) {
 } 
  
 void removeArticles(string& str) { 
-    int nOfArticles = 3; 
-    string articles[nOfArticles] = {"AN", "THE", "A"}; 
+    int const nOfArticles = 3;
+
+    string articles[nOfArticles] = {"AN", "THE", "A"};
     for (int i = 0; i < nOfArticles; i++){ 
         deleteSubstring(str, articles[i]); 
     } 
 } 
  
 void removePrepositions(string& str) { 
-    int nOfPrepositins = 11; 
+    int const nOfPrepositins = 11;
     string prepositions[nOfPrepositins] = {"AT", "BY", "AS", "IN", "FROM", "INTO", "AT", "FOR", "FROM", "ON", "OF"}; 
     for (int i = 0; i < nOfPrepositins; i++){ 
         deleteSubstring(str, prepositions[i]); 
@@ -229,12 +226,13 @@ bool isSame(string str1, string str2) {
     if (len1 == len2) {
         isSameStrings = true;
         for (int i = 0; str1[1] != '\0'; i++) {
-            if  (str1[i] != str2[i])
+            if (str1[i] != str2[i])
                 isSameStrings = false;
-                break;
+            break;
         }
     }
     return isSameStrings;
+}
 
 int makeShingles(string text, string shingles[]) {
     int spaces = 0;
@@ -268,16 +266,6 @@ bool compareShingles(string shingleText, string shingleFragment) {
     return true;
 }
 
-int getStringLength(string str) {
-    int counter = 0;
-
-    while (true) {
-        if (str[counter] == '\0')
-            break;
-        counter++;
-    }
-    return counter + 1;
-}
 
 double countPlagiarism(int amountOfShinglesText, int amountOfShinglesFragment) {
     double plagiarism = 0;
