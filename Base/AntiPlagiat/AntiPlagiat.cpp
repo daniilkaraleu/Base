@@ -2,10 +2,7 @@
 #include <string>
 using namespace std;
 
-// MAKE PLACE FLAME TABLE WINDOW SCREEN FUNNY ZERO UNDERGO ELSE SAND ADD NEW BEHIND SIMPLE
 
-int const N = 10000;
-string text = "MAKE PLACE FLAME TABLE WINDOW SCREEN FUNNY ZERO UNDERGO ELSE SAND ADD NEW BEHIND SIMPLE PLAYER";
 int const AMOUNT_OF_WORDS = 3;
 string shinglesText[100] = {};
 string shinglesFragment[100] = {};
