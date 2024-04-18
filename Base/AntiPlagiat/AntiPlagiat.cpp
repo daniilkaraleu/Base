@@ -3,6 +3,12 @@
 using namespace std;
 
 
+string text = "abc fg6 at the moment hoi hoi; k";
+string separators = " ,!?:.\n\t-(){}[];"; 
+int const N = 4096;
+
+
+
 int const AMOUNT_OF_WORDS = 3;
 string shinglesText[100] = {};
 string shinglesFragment[100] = {};
@@ -19,6 +25,20 @@ bool compareShingles(string shingleText, string shingleFragment);
 int getStringLength(string str);
 double countPlagiarism(int amountOfShinglesText, int amountOfShinglesFragment);
 void printPlagiarism(string fragment);
+
+void cleanStr(string& str); 
+void replaceSeparatorsWithWitespaces(string& text); 
+bool isSeparator(char sym); 
+void removeExcessSpaces(string& text); 
+void removeArticles(string& str); 
+void removePrepositions(string& str); 
+void capitalize(string& str); 
+void deleteSubstring(string& str, string& subStr); 
+void deleteNonLatinSymbols(string& str); 
+void deleteDuplicates(string& str); 
+void copyStr(string& str1, string str2);
+bool isSame(string str1, string str2);
+void concatStr(string& str1, string str2);
 
 int main() {
     string fragment = "";
@@ -41,6 +61,180 @@ int main() {
     return 0;
 }
 
+
+
+    cleanStr(text); 
+    cleanStr(fragment); 
+ 
+    cout << text << endl; 
+    cout << fragment << endl;
+
+    return 0;
+}
+
+void cleanStr(string& str) { 
+ 
+    replaceSeparatorsWithWitespaces(str); 
+    removeExcessSpaces(str); 
+    capitalize(str); 
+    removeArticles(str); 
+    removePrepositions(str); 
+    deleteDuplicates(str); 
+    deleteNonLatinSymbols(str); 
+} 
+
+int getStringLength(string str) { 
+    int counter = 0; 
+ 
+    while (true) { 
+        if (str[counter] == '\0') 
+            break; 
+        counter++; 
+    } 
+    return counter + 1; 
+} 
+
+bool isSeparator(char sym) { 
+    for (int i = 0; separators[i] != '\0'; i++) { 
+        if (sym == separators[i]) 
+            return true; 
+    } 
+    return false; 
+} 
+ 
+void replaceSeparatorsWithWitespaces(string& str) { 
+    for (int i = 0; str[i] != '\0'; i++) { 
+        if (isSeparator(str[i])) 
+            str[i] = ' '; 
+    } 
+} 
+ 
+void removeExcessSpaces(string& str) { 
+    string stack = ""; 
+ 
+    int spaceCounter = 0; 
+    while (str[spaceCounter] == ' ') { 
+        spaceCounter++; 
+    } 
+     
+    for (int i = spaceCounter; str[i] != '\0'; i++) { 
+        if (str[i] == ' ' and str[i + 1] == ' ') 
+            continue; 
+        else 
+            stack += str[i]; 
+    } 
+    int stackLength = getStringLength(stack); 
+    if (stack[stackLength - 1] == ' ') 
+        stack[stackLength - 1] = '\0'; 
+ 
+    copyStr(str, stack); 
+} 
+ 
+void capitalize(string& str) { 
+    for (int i = 0; str[i] != '\0'; i++) { 
+        if (str[i] >= 'a' and str[i] <= 'z') { 
+            str[i] = str[i] - 32; 
+        } 
+    } 
+} 
+ 
+void deleteSubstring(string& str, string& subStr) { 
+    string tempWord = ""; 
+    string stack = ""; 
+    for (int i = 0; str[i] != '\0'; i++) { 
+        if (str[i] != ' ') { 
+            tempWord += str[i]; 
+        } 
+        else if (!isSame(tempWord, subStr)) { 
+            stack += tempWord + " "; 
+            tempWord = ""; 
+        } 
+        else { 
+            tempWord = ""; 
+        } 
+    } 
+    if (!isSame(tempWord, subStr)) { 
+        concatStr(stack, tempWord); 
+        tempWord = ""; 
+        } 
+ 
+    copyStr(str, stack); 
+} 
+ 
+void removeArticles(string& str) { 
+    int nOfArticles = 3; 
+    string articles[nOfArticles] = {"AN", "THE", "A"}; 
+    for (int i = 0; i < nOfArticles; i++){ 
+        deleteSubstring(str, articles[i]); 
+    } 
+} 
+ 
+void removePrepositions(string& str) { 
+    int nOfPrepositins = 11; 
+    string prepositions[nOfPrepositins] = {"AT", "BY", "AS", "IN", "FROM", "INTO", "AT", "FOR", "FROM", "ON", "OF"}; 
+    for (int i = 0; i < nOfPrepositins; i++){ 
+        deleteSubstring(str, prepositions[i]); 
+    } 
+} 
+ 
+void deleteDuplicates(string& str) { 
+    string tempWord = ""; 
+    string preTempWord = ""; 
+    string stack = ""; 
+    for (int i = 0; str[i] != '\0'; i++) { 
+        if (str[i] != ' ') { 
+            tempWord += str[i]; 
+        } 
+        else if (str[i] == ' ') { 
+            if (tempWord != preTempWord) { 
+                stack += tempWord + " "; 
+            }            
+            preTempWord = tempWord; 
+            tempWord = ""; 
+        } 
+        if (str[i + 1] == '\0') { 
+            stack += tempWord; 
+        } 
+    } 
+    copyStr(str, stack); 
+} 
+ 
+void deleteNonLatinSymbols(string& str) { 
+    string tempWord = ""; 
+    string stack = ""; 
+    for (int i = 0; str[i] != '\0'; i++) { 
+        if (str[i] != ' ') { 
+            tempWord += str[i]; 
+            if (str[i] < 'A' or str[i] > 'Z') { 
+                tempWord = ""; 
+                continue; 
+            } 
+        } 
+        else if (str[i] == ' ') { 
+            stack += tempWord + " "; 
+            tempWord = ""; 
+        } 
+        if (str[i + 1] == '\0') { 
+            concatStr(stack, tempWord); 
+        } 
+    } 
+    copyStr(str, stack); 
+}
+
+bool isSame(string str1, string str2) {
+    int len1 = getStringLength(str1);
+    int len2 = getStringLength(str2);
+    bool isSameStrings = false;
+
+    if (len1 == len2) {
+        isSameStrings = true;
+        for (int i = 0; str1[1] != '\0'; i++) {
+            if  (str1[i] != str2[i])
+                isSameStrings = false;
+                break;
+        }
+    }
+    return isSameStrings;
 
 int makeShingles(string text, string shingles[]) {
     int spaces = 0;
@@ -108,4 +302,29 @@ void printPlagiarism(string fragment) {
     plagiarism = countPlagiarism(amountOfShinglesText, amountOfShinglesFragment) / amountOfShinglesFragment;
     plagiarism *= 100.0;
     cout << "Your plagiarism percent: " << plagiarism << "%" << endl;
+}
+
+void copyStr(string& str1, string str2) {
+    char copy[N] = {};
+    int i = 0;
+    for(i = 0; str2[i] != '\0'; ++i) {
+        copy[i] = str2[i];
+    }
+    copy[i] = '\0';
+    str1 = copy;
+}
+
+void concatStr(string& str1, string str2) {
+    char copy[N] = {};
+    int i = 0;
+    int j = 0;
+    for (i = 0; str1[i] != '\0'; i++) {
+        copy[i] = str1[i];
+    }
+    for (j = 0; str2[j] != '\0'; j++) {
+        copy[i] = str2[j];
+        i++;
+    }
+    copy[i] = '\0';
+    str1 = copy;    
 }
