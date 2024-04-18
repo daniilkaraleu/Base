@@ -41,15 +41,6 @@ int main() {
     return 0;
 }
 
-int checkPlagiarism(string text, string fragment) {
-
-
-
-
-
-    printPlagiarism(fragment);
-    return 0;
-}
 
 int makeShingles(string text, string shingles[]) {
     int spaces = 0;
