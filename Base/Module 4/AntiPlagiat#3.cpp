@@ -39,6 +39,7 @@ string makeShingleFragment(string fragment);
 void changeFragment(string& fragment, bool deletedShingle);
 void removeShingle(string& fragment);
 void removeFirstWord(string& text);
+double count(string& fragment, string text);
 
 
 
@@ -88,7 +89,7 @@ int checkPlagiarism(string text, string fragment){
     cleanStr(text);
     cleanStr(fragment);
 
-    return roundedToInt(getTotalCoincidence(fragment, text));
+    return roundedToInt(count(fragment, text));
 }
 
 void cleanStr(string& str) {
@@ -332,7 +333,7 @@ double getTotalCoincidence(string fragment, string text) {
         shingle="";
         deletedShingle = false;
     }
-    return total / amountOfShinglesFragment * 100.0;
+    return total;
 }
 
 void copyStr(string& str1, string str2) {
@@ -451,4 +452,17 @@ void removeShingle(string& fragment){
         fragment[i] = ' ';
     }
     carriage = 0;
+}
+double count(string& fragment, string text){
+    double result = 0.0;
+    double plagiarism = 0.0;
+
+    plagiarism = getTotalCoincidence(fragment, text);
+
+    if (amountOfShinglesFragment == 0)
+        result = 0;
+    else
+        result = plagiarism / amountOfShinglesFragment * 100.0;
+
+    return result;
 }
