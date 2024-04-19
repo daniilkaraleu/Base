@@ -34,7 +34,7 @@ int countPlagiarism(int amountOfShinglesText, string shingle);
 void setShinglesNull(string shingle[N]);
 int roundedToInt(double num);
 int skipOneWord(string str, int index);
-int getAmountOfShingles();
+int getAmountOfShingles(string shingle[]);
 string makeShingleFragment(string fragment);
 void changeFragment(string& fragment, bool deletedShingle);
 void removeShingle(string& fragment);
@@ -60,12 +60,12 @@ void concatStr(string& str1, string str2);
 int main() {
     string fragment = "Carcinoid is also tumor and shares several cytochemical features with Pheo.";
     int choice = 0;
+    cout << text << endl;
+    cout << endl;
 
     while (true) {
         cout << "1) Verify new fragment \n2) Exit" << endl;
         cin >> choice;
-        cout << text << endl;
-        cout << endl;
         if (choice == 1) {
             cout << "Input your text:" << endl;
             getline(cin, fragment);
@@ -88,8 +88,6 @@ int checkPlagiarism(string text, string fragment){
     cleanStr(text);
     cleanStr(fragment);
 
-    cout << text << endl;
-    cout << fragment << endl;
     return roundedToInt(getTotalCoincidence(fragment, text));
 }
 
@@ -275,7 +273,6 @@ int makeShinglesArray(string text, string shingles[], int index) {
                 spaces++;
             }
             else if (text[i] == '\0') {
-                spaces++;
                 break;
             }
             else
@@ -285,8 +282,8 @@ int makeShinglesArray(string text, string shingles[], int index) {
         iShingle++;
     }
     if (text[i-1] == ' ')
-        iShingle--;
-    if (spaces < AMOUNT_OF_WORDS){
+        spaces--;
+    if (spaces < AMOUNT_OF_WORDS - 1){
         shingles[iShingle - 1] = "";
         return iShingle - 1;
     }
@@ -314,11 +311,13 @@ double getTotalCoincidence(string fragment, string text) {
     string shingle = "";
     bool deletedShingle = false;
 
-    amountOfShinglesFragment = makeShinglesArray(fragment, shinglesFragment, indexFragment);
+    makeShinglesArray(fragment, shinglesFragment, indexFragment);
+    amountOfShinglesFragment = getAmountOfShingles(shinglesFragment);
     while (notTheEnd) {
         shingle = makeShingleFragment(fragment);
         for (int i = 0; i < AMOUNT_OF_WORDS; ++i) {
-            amountOfShinglesText = makeShinglesArray(text, shinglesText, indexText);
+            makeShinglesArray(text, shinglesText, indexText);
+            amountOfShinglesText = getAmountOfShingles(shinglesText);
             plagiarism = countPlagiarism(amountOfShinglesText, shingle);
             total += plagiarism;
             setShinglesNull(shinglesText);
@@ -401,10 +400,10 @@ int roundedToInt(double num){
     return result;
 }
 
-int getAmountOfShingles(string shingles[]){
+int getAmountOfShingles(string shingle[]){
     int counter = 0;
 
-    while (shingles[counter] != "")
+    while (shingle[counter] != "")
         counter++;
     return counter;
 }
