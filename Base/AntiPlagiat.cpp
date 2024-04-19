@@ -19,7 +19,7 @@ int const N = 4096;
 
 
 
-int const AMOUNT_OF_WORDS = 2;
+int const AMOUNT_OF_WORDS = 5;
 string shinglesText[N] = {};
 string shinglesFragment[N] = {};
 
@@ -48,9 +48,7 @@ bool isSame(string str1, string str2);
 void concatStr(string& str1, string str2);
 
 int main() {
-    string fragment = "Approximately 800 new cases of Pheo are diagnosed annually in the United States. "
-                      "Carcinoid is also a neuroendocrine tumor and shares several cytochemical features with Pheo. "
-                      "For the treatment of Pheo and carcinoid, surgery, chemotherapy, and radiotherapy are used. ";
+    string fragment = "Approximately 800 new cases of Pheo are diagnosed annually in the United States. ";
     int choice = 0;
 
     while (true) {
@@ -290,24 +288,15 @@ double getTotalPlagiarismPercentage(string fragment, string text) {
     int indexFragment = 0;
     int totalAmountOfShingles = 0;
 
+    amountOfShinglesFragment = makeShingles(fragment, shinglesFragment, indexFragment);
 
     for (int i = 0; i < AMOUNT_OF_WORDS; ++i) {
         amountOfShinglesText = makeShingles(text, shinglesText, indexText);
-
-        for (int j = 0; j < AMOUNT_OF_WORDS; ++j) {
-
-            amountOfShinglesFragment = makeShingles(fragment, shinglesFragment, indexFragment);
-            totalAmountOfShingles += amountOfShinglesFragment;
-            totalPlagiarism += countPlagiarism(amountOfShinglesText, amountOfShinglesFragment);
-            setShinglesNull(shinglesFragment);
-            indexFragment = skipOneWord(fragment, indexFragment);
-
-        }
+        totalPlagiarism += countPlagiarism(amountOfShinglesText, amountOfShinglesFragment);
         setShinglesNull(shinglesText);
         indexText = skipOneWord(text, indexText);
-        indexFragment = 0;
     }
-    return totalPlagiarism / totalAmountOfShingles * 100.0;
+    return totalPlagiarism / amountOfShinglesFragment * 100.0;
 }
 
 
@@ -353,8 +342,9 @@ int countPlagiarism(int amountOfShinglesText, int amountOfShinglesFragment) {
 
     for (int j = 0; j < amountOfShinglesText; ++j) {
         for (int k = 0; k < amountOfShinglesFragment; ++k) {
-            if (compareShingles(shinglesText[k], shinglesFragment[j])){
+            if (compareShingles(shinglesText[j], shinglesFragment[k])){
                 plagiarism++;
+                shinglesFragment[k] = "";
                 break;
             }
         }
