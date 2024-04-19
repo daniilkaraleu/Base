@@ -16,22 +16,29 @@ string text = "Pheochromocytoma and paraganglioma are rare tumors arising from a
               "Iodine-131 also emits gamma photons that can be detected by using a gamma camera for imaging the distribution of the radiopharmaceutical";
 string separators = " ,!?:.\n\t-(){}[];";
 int const N = 4096;
+int const AMOUNT_OF_WORDS = 3;
 
-
-
-int const AMOUNT_OF_WORDS = 5;
+int amountOfShinglesFragment = 0;
+int carriage = 0;
+bool notTheEnd = true;
 string shinglesText[N] = {};
 string shinglesFragment[N] = {};
 
 int checkPlagiarism(string text, string fragment);
-int makeShingles(string text, string shingles[], int index);
+void makeShinglesArray(string text, string shingles[], int index);
 bool compareShingles(string shingleText, string shingleFragment);
 int getStringLength(string str);
-double getTotalPlagiarismPercentage(string fragment, string text);
-int countPlagiarism(int amountOfShinglesText, int amountOfShinglesFragment);
+double getTotalCoincidence(string fragment, string text);
+int countPlagiarism(int amountOfShinglesText, string& fragment, string shingle);
 void setShinglesNull(string shingle[N]);
 int roundedToInt(double num);
 int skipOneWord(string str, int index);
+string makeShingleFragment(string fragment);
+void removeShingle(string& fragment);
+void removeFirstWord(string& text);
+void changeFragment(string& fragment, bool deletedShingle);
+int calculatePlagiarism(double plagiarism);
+int getAmountOfShingles(string shingles[]);
 
 void cleanStr(string& str);
 void replaceSeparatorsWithWhitespaces(string& str);
@@ -48,8 +55,11 @@ bool isSame(string str1, string str2);
 void concatStr(string& str1, string str2);
 
 int main() {
-    string fragment = "Approximately 800 new cases of Pheo are diagnosed annually in the United States. ";
+    string fragment = "Approximately 800 new cases of Pheo are diagnosed annually in the United States.";
     int choice = 0;
+
+    cout << text << endl;
+    cout << endl;
 
     while (true) {
         cout << "1) Verify new fragment \n2) Exit" << endl;
@@ -73,9 +83,7 @@ int checkPlagiarism(string text, string fragment){
     cleanStr(text);
     cleanStr(fragment);
 
-//    cout << text << endl;
-//    cout << fragment << endl;
-    return roundedToInt(getTotalPlagiarismPercentage(fragment, text));
+    return calculatePlagiarism(getTotalCoincidence(fragment, text));
 }
 
 void cleanStr(string& str) {
@@ -245,7 +253,7 @@ bool isSame(string str1, string str2) {
     return isSameStrings;
 }
 
-int makeShingles(string text, string shingles[], int index) {
+void makeShinglesArray(string text, string shingles[], int index) {
     int spaces = 0;
     int iShingle = 0;
 
@@ -262,12 +270,10 @@ int makeShingles(string text, string shingles[], int index) {
                 break;
             else
                 shingles[iShingle] += text[i];
-
             i++;
         }
         iShingle++;
     }
-    return iShingle;
 }
 
 bool compareShingles(string shingleText, string shingleFragment) {
@@ -280,23 +286,39 @@ bool compareShingles(string shingleText, string shingleFragment) {
     return true;
 }
 
-double getTotalPlagiarismPercentage(string fragment, string text) {
-    double totalPlagiarism = 0;
+double getTotalCoincidence(string fragment, string text) {
+    double totalCoincidence = 0;
+    int plagiarism = 0;
     int amountOfShinglesText = 0;
-    int amountOfShinglesFragment = 0;
     int indexText = 0;
     int indexFragment = 0;
     int totalAmountOfShingles = 0;
+    string shingle = "";
+    bool deletedShingle = false;
 
-    amountOfShinglesFragment = makeShingles(fragment, shinglesFragment, indexFragment);
+    makeShinglesArray(fragment, shinglesFragment, indexFragment);
+    amountOfShinglesFragment = getAmountOfShingles(shinglesFragment);
+    while (notTheEnd) {
+        shingle = makeShingleFragment(fragment);
 
-    for (int i = 0; i < AMOUNT_OF_WORDS; ++i) {
-        amountOfShinglesText = makeShingles(text, shinglesText, indexText);
-        totalPlagiarism += countPlagiarism(amountOfShinglesText, amountOfShinglesFragment);
-        setShinglesNull(shinglesText);
-        indexText = skipOneWord(text, indexText);
+        for (int i = 0; i < AMOUNT_OF_WORDS; ++i) {
+            makeShinglesArray(text, shinglesText, indexText);
+            amountOfShinglesText = getAmountOfShingles(shinglesText);
+            plagiarism = countPlagiarism(amountOfShinglesText, fragment, shingle);
+            totalCoincidence += plagiarism;
+            setShinglesNull(shinglesText);
+            indexText = skipOneWord(text, indexText);
+
+            if (plagiarism){
+                deletedShingle = true;
+                break;
+            }
+        }
+        changeFragment(fragment, deletedShingle);
+        shingle="";
+        deletedShingle = false;
     }
-    return totalPlagiarism / amountOfShinglesFragment * 100.0;
+    return totalCoincidence;
 }
 
 
@@ -337,19 +359,15 @@ int skipOneWord(string str, int index){
 
     return i;
 }
-int countPlagiarism(int amountOfShinglesText, int amountOfShinglesFragment) {
+int countPlagiarism(int amountOfShinglesText, string& fragment, string shingle) {
     int plagiarism = 0;
 
     for (int j = 0; j < amountOfShinglesText; ++j) {
-        for (int k = 0; k < amountOfShinglesFragment; ++k) {
-            if (compareShingles(shinglesText[j], shinglesFragment[k])){
+            if (compareShingles(shinglesText[j], shingle)){
                 plagiarism++;
-                shinglesFragment[k] = "";
                 break;
             }
-        }
     }
-
     return plagiarism;
 }
 
@@ -365,4 +383,65 @@ int roundedToInt(double num){
     result = num + 0.5;
 
     return result;
+}
+
+string makeShingleFragment(string fragment){
+    string shingle;
+    int spaces = 0;
+
+    while (fragment[carriage] == ' ')
+        carriage++;
+    for (int spaces = 0; spaces < AMOUNT_OF_WORDS;) {
+        if (fragment[carriage] == ' '){
+            while (fragment[carriage + 1] == ' ')
+                carriage++;
+            spaces++;
+        }else if (fragment[carriage] == '\0'){
+            notTheEnd = false;
+            break;
+        }else
+            shingle += fragment[carriage];
+        carriage++;
+    }
+
+    return shingle;
+}
+
+void removeShingle(string& fragment){
+    for (int i = 0; i < carriage; ++i) {
+        fragment[i] = ' ';
+    }
+}
+
+void removeFirstWord(string& text){
+    int index = 0;
+    while (text[index] == ' ')
+        index++;
+    while (text[index] != ' '){
+        text[index] = ' ';
+        index++;
+    }
+}
+
+void changeFragment(string& fragment, bool deletedShingle){
+    if (!deletedShingle)
+        removeFirstWord(fragment);
+    else
+        removeShingle(fragment);
+}
+
+int calculatePlagiarism(double plagiarism){
+    int result = 0;
+
+    result = roundedToInt(plagiarism / amountOfShinglesFragment * 100.0);
+
+    return result;
+}
+
+int getAmountOfShingles(string shingles[]){
+    int amountOfShingles = 0;
+    for (int i = 0; shingles[i] != ""; ++i) {
+        amountOfShingles++;
+    }
+    return amountOfShingles;
 }
