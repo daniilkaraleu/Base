@@ -19,7 +19,7 @@ int const N = 4096;
 
 int carriage = 0;
 bool notTheEnd = true;
-int const AMOUNT_OF_WORDS = 3;
+int const AMOUNT_OF_WORDS = 2;
 string shinglesText[N] = {};
 string shinglesFragment[N] = {};
 int shingleIndexFragment[N] = {};
@@ -69,9 +69,13 @@ int main() {
         cin >> choice;
         if (choice == 1) {
             cout << "Input your text:" << endl;
-//            getline(cin, fragment);
-//            getline(cin, fragment);
+            getline(cin, fragment);
+            getline(cin, fragment);
             cout << "Your plagiarism percent: " << checkPlagiarism(text, fragment) << "%" << endl;
+            setShinglesNull(shinglesText);
+            setShinglesNull(shinglesFragment);
+            carriage = 0;
+            notTheEnd = true;
         } else {
             break;
         }
