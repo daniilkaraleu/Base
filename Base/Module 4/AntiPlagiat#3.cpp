@@ -22,8 +22,6 @@ bool notTheEnd = true;
 int const AMOUNT_OF_WORDS = 2;
 string shinglesText[N] = {};
 string shinglesFragment[N] = {};
-int shingleIndexFragment[N] = {};
-int shingleIndexText[N] = {};
 int amountOfShinglesFragment = 0;
 
 
@@ -66,10 +64,12 @@ int main() {
     while (true) {
         cout << "1) Verify new fragment \n2) Exit" << endl;
         cin >> choice;
+        cout << text << endl;
+        cout << endl;
         if (choice == 1) {
             cout << "Input your text:" << endl;
-//            getline(cin, fragment);
-//            getline(cin, fragment);
+            getline(cin, fragment);
+            getline(cin, fragment);
             cout << "Your plagiarism percent: " << checkPlagiarism(text, fragment) << "%" << endl;
             setShinglesNull(shinglesText);
             setShinglesNull(shinglesFragment);
@@ -263,8 +263,9 @@ bool isSame(string str1, string str2) {
 int makeShinglesArray(string text, string shingles[], int index) {
     int spaces = 0;
     int iShingle = 0;
+    int i = 0;
 
-    for (int i = index; text[i] != '\0';) {
+    for (i = index; text[i] != '\0';) {
         if (text[i] == '\0')
             break;
         for (spaces = 0; spaces < AMOUNT_OF_WORDS;) {
@@ -283,6 +284,8 @@ int makeShinglesArray(string text, string shingles[], int index) {
         }
         iShingle++;
     }
+    if (text[i-1] == ' ')
+        iShingle--;
     if (spaces < AMOUNT_OF_WORDS){
         shingles[iShingle - 1] = "";
         return iShingle - 1;
@@ -311,9 +314,9 @@ double getTotalCoincidence(string fragment, string text) {
     string shingle = "";
     bool deletedShingle = false;
 
-    shingle = makeShingleFragment(fragment);
     amountOfShinglesFragment = makeShinglesArray(fragment, shinglesFragment, indexFragment);
     while (notTheEnd) {
+        shingle = makeShingleFragment(fragment);
         for (int i = 0; i < AMOUNT_OF_WORDS; ++i) {
             amountOfShinglesText = makeShinglesArray(text, shinglesText, indexText);
             plagiarism = countPlagiarism(amountOfShinglesText, shingle);
@@ -329,7 +332,6 @@ double getTotalCoincidence(string fragment, string text) {
         changeFragment(fragment, deletedShingle);
         shingle="";
         deletedShingle = false;
-        shingle = makeShingleFragment(fragment);
     }
     return total / amountOfShinglesFragment * 100.0;
 }
