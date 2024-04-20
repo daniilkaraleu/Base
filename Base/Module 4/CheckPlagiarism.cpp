@@ -3,10 +3,12 @@
 
 using namespace std;
 
-int const N = 4096;
-int const AMOUNT_OF_WORDS = 3;
-int const nOfPrepositions = 11;
-int const nOfArticles = 3;
+const int N = 4096;
+const int AMOUNT_OF_WORDS = 3;
+const int N_OF_PREPOSITIONS = 11;
+const int N_OF_ARTICLES = 3;
+const char SYMBOL_NULL = '\0';
+const char SYMBOL_WHITESPACE = ' ';
 
 string text = "Pheochromocytoma and paraganglioma are rare tumors arising from adrenal medullary "
               "chromaffin cells or extraadrenal sympathetic neurons, respectively. In most other respects, "
@@ -21,13 +23,13 @@ string text = "Pheochromocytoma and paraganglioma are rare tumors arising from a
               "it is the combination of 131I cytotoxicity and MIBG target specificity that results in a selective, potentially lethal dose to tumor cells. "
               "Iodine-131 also emits gamma photons that can be detected by using a gamma camera for imaging the distribution of the radiopharmaceutical ";
 
-string separators = " ,!?:.\n\t-(){}[];";
 int carriage = 0;
 bool notTheEnd = true;
 string shinglesText[N] = {};
 string shinglesFragment[N] = {};
-string articles[nOfArticles] = {"AN", "THE", "A"};
-string prepositions[nOfPrepositions] = {"AT", "BY", "AS", "IN",
+string separators = " ,!?:.\n\t-(){}[];";
+string articles[N_OF_ARTICLES] = {"AN", "THE", "A"};
+string prepositions[N_OF_PREPOSITIONS] = {"AT", "BY", "AS", "IN",
                                         "FROM", "INTO", "TO",
                                         "FOR", "FROM", "ON", "OF"};
 
@@ -59,7 +61,7 @@ void deleteSubstring(string &str, string &subStr);
 void deleteNonLatinSymbols(string &str);
 void deleteDuplicates(string &str);
 void copyStr(string &str1, string str2);
-bool isSame(string str1, string str2);
+bool isEqual(string str1, string str2);
 void concatStr(string &str1, string str2);
 
 int main() {
@@ -86,6 +88,7 @@ int main() {
             notTheEnd = true;
         }
     }
+
     return 0;
 }
 
@@ -108,20 +111,20 @@ void cleanStr(string &str) {
 
 int getStringLength(string str) {
     int counter = 0;
-
     while (true) {
-        if (str[counter] == '\0'){
+        if (str[counter] == SYMBOL_NULL) {
             break;
         }
 
         counter++;
     }
+
     return counter + 1;
 }
 
 bool isSeparator(char sym) {
-    for (int i = 0; separators[i] != '\0'; i++) {
-        if (sym == separators[i]){
+    for (int i = 0; separators[i] != SYMBOL_NULL; i++) {
+        if (sym == separators[i]) {
             return true;
         }
     }
@@ -130,9 +133,10 @@ bool isSeparator(char sym) {
 }
 
 void replaceSeparatorsWithWhitespaces(string &str) {
-    for (int i = 0; str[i] != '\0'; i++) {
-        if (isSeparator(str[i]))
-            str[i] = ' ';
+    for (int i = 0; str[i] != SYMBOL_NULL; i++) {
+        if (isSeparator(str[i])) {
+            str[i] = SYMBOL_WHITESPACE;
+        }
     }
 }
 
@@ -141,28 +145,29 @@ void removeExcessSpaces(string &str) {
     int stackLength = 0;
     int spaceCounter = 0;
 
-    while (str[spaceCounter] == ' ') {
+    while (str[spaceCounter] == SYMBOL_WHITESPACE) {
         spaceCounter++;
     }
 
-    for (int i = spaceCounter; str[i] != '\0'; i++) {
-        if (str[i] == ' ' and str[i + 1] == ' ')
+    for (int i = spaceCounter; str[i] != SYMBOL_NULL; i++) {
+        if (str[i] == SYMBOL_WHITESPACE && str[i + 1] == SYMBOL_WHITESPACE) {
             continue;
-        else
+        } else {
             stack += str[i];
+        }
     }
 
     stackLength = getStringLength(stack);
-    if (stack[stackLength - 1] == ' '){
-        stack[stackLength - 1] = '\0';
+    if (stack[stackLength - 1] == SYMBOL_WHITESPACE) {
+        stack[stackLength - 1] = SYMBOL_NULL;
     }
 
     copyStr(str, stack);
 }
 
 void capitalize(string &str) {
-    for (int i = 0; str[i] != '\0'; i++) {
-        if (str[i] >= 'a' and str[i] <= 'z') {
+    for (int i = 0; str[i] != SYMBOL_NULL; i++) {
+        if (str[i] >= 'a' && str[i] <= 'z') {
             str[i] = str[i] - 32;
         }
     }
@@ -172,10 +177,10 @@ void deleteSubstring(string &str, string &subStr) {
     string tempWord = "";
     string stack = "";
 
-    for (int i = 0; str[i] != '\0'; i++) {
-        if (str[i] != ' ') {
+    for (int i = 0; str[i] != SYMBOL_NULL; i++) {
+        if (str[i] != SYMBOL_WHITESPACE) {
             tempWord += str[i];
-        } else if (!isSame(tempWord, subStr)) {
+        } else if (!isEqual(tempWord, subStr)) {
             stack += tempWord + " ";
             tempWord = "";
         } else {
@@ -183,7 +188,7 @@ void deleteSubstring(string &str, string &subStr) {
         }
     }
 
-    if (!isSame(tempWord, subStr)) {
+    if (!isEqual(tempWord, subStr)) {
         concatStr(stack, tempWord);
         tempWord = "";
     }
@@ -192,13 +197,13 @@ void deleteSubstring(string &str, string &subStr) {
 }
 
 void removeArticles(string &str) {
-    for (int i = 0; i < nOfArticles; i++) {
+    for (int i = 0; i < N_OF_ARTICLES; i++) {
         deleteSubstring(str, articles[i]);
     }
 }
 
 void removePrepositions(string &str) {
-    for (int i = 0; i < nOfPrepositions; i++) {
+    for (int i = 0; i < N_OF_PREPOSITIONS; i++) {
         deleteSubstring(str, prepositions[i]);
     }
 }
@@ -208,18 +213,18 @@ void deleteDuplicates(string &str) {
     string preTempWord = "";
     string stack = "";
 
-    for (int i = 0; str[i] != '\0'; i++) {
-        if (str[i] != ' ') {
+    for (int i = 0; str[i] != SYMBOL_NULL; i++) {
+        if (str[i] != SYMBOL_WHITESPACE) {
             tempWord += str[i];
-        } else if (str[i] == ' ') {
-            if (tempWord != preTempWord) {
+        } else if (str[i] == SYMBOL_WHITESPACE) {
+            if (!isEqual(tempWord, preTempWord)) {
                 stack += tempWord + " ";
             }
             preTempWord = tempWord;
             tempWord = "";
         }
 
-        if (str[i + 1] == '\0') {
+        if (str[i + 1] == SYMBOL_NULL) {
             stack += tempWord;
         }
     }
@@ -231,10 +236,10 @@ void deleteNonLatinSymbols(string &str) {
     string tempWord = "";
     string stack = "";
 
-    for (int i = 0; str[i] != '\0'; i++) {
+    for (int i = 0; str[i] != SYMBOL_NULL; i++) {
         if (str[i] != ' ') {
             tempWord += str[i];
-            if ((str[i] < 'A' or str[i] > 'Z') and str[i] != '\'') {
+            if ((str[i] < 'A' || str[i] > 'Z') && str[i] != SYMBOL_NULL) {
                 tempWord = "";
                 continue;
             }
@@ -243,7 +248,7 @@ void deleteNonLatinSymbols(string &str) {
             tempWord = "";
         }
 
-        if (str[i + 1] == '\0') {
+        if (str[i + 1] == SYMBOL_NULL) {
             concatStr(stack, tempWord);
         }
     }
@@ -251,20 +256,21 @@ void deleteNonLatinSymbols(string &str) {
     copyStr(str, stack);
 }
 
-bool isSame(string str1, string str2) {
+bool isEqual(string str1, string str2) {
     int len1 = getStringLength(str1);
     int len2 = getStringLength(str2);
     bool isSameStrings = false;
 
     if (len1 == len2) {
         isSameStrings = true;
-        for (int i = 0; str1[i] != '\0'; i++) {
+        for (int i = 0; str1[i] != SYMBOL_NULL; i++) {
             if (str1[i] != str2[i]) {
                 isSameStrings = false;
                 break;
             }
         }
     }
+
     return isSameStrings;
 }
 
@@ -274,15 +280,15 @@ void makeShinglesArray(string text, string shingles[], int index) {
     int i = 0;
 
     i = index;
-    while (text[i] != '\0') {
+    while (text[i] != SYMBOL_NULL) {
         spaces = 0;
 
         while (spaces < AMOUNT_OF_WORDS) {
-            if (text[i] == ' ') {
-                while (text[i + 1] == ' ')
+            if (text[i] == SYMBOL_WHITESPACE) {
+                while (text[i + 1] == SYMBOL_WHITESPACE)
                     i++;
                 spaces++;
-            } else if (text[i] == '\0') {
+            } else if (text[i] == SYMBOL_NULL) {
                 break;
             } else {
                 shingles[iShingle] += text[i];
@@ -293,7 +299,7 @@ void makeShinglesArray(string text, string shingles[], int index) {
         iShingle++;
     }
 
-    if (text[i - 1] == ' ') {
+    if (text[i - 1] == SYMBOL_WHITESPACE) {
         spaces--;
     }
     if (spaces < AMOUNT_OF_WORDS - 1) {
@@ -356,11 +362,11 @@ void copyStr(string &str1, string str2) {
     char copy[N] = {};
     int i = 0;
 
-    for (i = 0; str2[i] != '\0'; ++i) {
+    for (i = 0; str2[i] != SYMBOL_NULL; ++i) {
         copy[i] = str2[i];
     }
 
-    copy[i] = '\0';
+    copy[i] = SYMBOL_NULL;
     str1 = copy;
 }
 
@@ -369,27 +375,27 @@ void concatStr(string &str1, string str2) {
     int i = 0;
     int j = 0;
 
-    for (i = 0; str1[i] != '\0'; i++) {
+    for (i = 0; str1[i] != SYMBOL_NULL; i++) {
         copy[i] = str1[i];
     }
 
-    for (j = 0; str2[j] != '\0'; j++) {
+    for (j = 0; str2[j] != SYMBOL_NULL; j++) {
         copy[i] = str2[j];
         i++;
     }
 
-    copy[i] = '\0';
+    copy[i] = SYMBOL_NULL;
     str1 = copy;
 }
 
 int skipOneWord(string str, int index) {
     int i = index;
 
-    while (str[i] != ' ') {
+    while (str[i] != SYMBOL_WHITESPACE) {
         i++;
     }
 
-    while (str[i] == ' '){
+    while (str[i] == SYMBOL_WHITESPACE){
         i++;
     }
 
@@ -409,7 +415,7 @@ int findCoincidence(int amountOfShinglesText, string shingle) {
     return plagiarism;
 }
 
-void resetShingles(string shingle[4096]) {
+void resetShingles(string shingle[N]) {
     for (int i = 0; i < N - 1; ++i) {
         shingle[i] = "";
     }
@@ -417,15 +423,12 @@ void resetShingles(string shingle[4096]) {
 
 int roundedToInt(double num) {
     int result = 0;
-
     result = num + 0.5;
-
     return result;
 }
 
 int getAmountOfShingles(string shingle[]) {
     int counter = 0;
-
     while (shingle[counter] != "") {
         counter++;
     }
@@ -437,19 +440,19 @@ string makeShingleOfFragment(string fragment) {
     string shingle;
     int spaces = 0;
 
-    while (fragment[carriage] == ' ') {
+    while (fragment[carriage] == SYMBOL_WHITESPACE) {
         carriage++;
     }
 
     spaces = 0;
     while (spaces < AMOUNT_OF_WORDS) {
-        if (fragment[carriage] == ' ') {
-            while (fragment[carriage + 1] == ' ') {
+        if (fragment[carriage] == SYMBOL_WHITESPACE) {
+            while (fragment[carriage + 1] == SYMBOL_WHITESPACE) {
                 carriage++;
             }
 
             spaces++;
-        } else if (fragment[carriage] == '\0') {
+        } else if (fragment[carriage] == SYMBOL_NULL) {
             notTheEnd = false;
             break;
         } else {
@@ -473,12 +476,12 @@ void changeFragment(string &fragment, bool deletedShingle) {
 void removeFirstWord(string &text) {
     int index = 0;
 
-    while (text[index] == ' ') {
+    while (text[index] == SYMBOL_WHITESPACE) {
         index++;
     }
 
-    while (text[index] != ' ') {
-        text[index] = ' ';
+    while (text[index] != SYMBOL_WHITESPACE) {
+        text[index] = SYMBOL_WHITESPACE;
         index++;
     }
 
@@ -487,7 +490,7 @@ void removeFirstWord(string &text) {
 
 void removeShingle(string &fragment) {
     for (int i = 0; i < carriage - 1; ++i) {
-        fragment[i] = ' ';
+        fragment[i] = SYMBOL_WHITESPACE;
     }
 
     carriage = 0;
