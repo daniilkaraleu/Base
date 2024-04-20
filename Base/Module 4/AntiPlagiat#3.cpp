@@ -250,10 +250,11 @@ bool isSame(string str1, string str2) {
 
     if (len1 == len2) {
         isSameStrings = true;
-        for (int i = 0; str1[1] != '\0'; i++) {
-            if (str1[i] != str2[i])
+        for (int i = 0; str1[i] != '\0'; i++) {
+            if (str1[i] != str2[i]) {
                 isSameStrings = false;
-            break;
+                break;
+            }
         }
     }
     return isSameStrings;
